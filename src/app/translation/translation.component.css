@@ -1,0 +1,31 @@
+.custom-grid {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+mat-card {
+  background-color: #7dff31;
+  padding: 0px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+textarea {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  resize: none;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+}
+

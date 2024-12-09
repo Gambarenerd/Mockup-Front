@@ -1,0 +1,69 @@
+
+<mat-grid-list cols="2" rowHeight="3:2" class=".custom-grid">
+  <!-- Primo riquadro: Testo originale -->
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Testo Originale</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <textarea
+          [(ngModel)]="inputText"
+          class="form-control"
+          rows="8"
+          placeholder="Inserisci il testo originale..."
+        ></textarea>
+        <button mat-raised-button color="primary" (click)="translateText()">Traduci</button>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <!-- Secondo riquadro: Testo aggiuntivo -->
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Testo Aggiuntivo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <textarea
+          [(ngModel)]="additionalInputText"
+          class="form-control"
+          rows="8"
+          placeholder="Inserisci altro testo..."
+        ></textarea>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <!-- Terzo riquadro: Sinonimi -->
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Sinonimi</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let synonym of synonyms">{{ synonym }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <!-- Quarto riquadro: Testo tradotto -->
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Translation</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <textarea
+          [value]="translatedText"
+          class="form-control"
+          rows="8"
+          readonly
+          (mouseup)="highlightWord($event)"
+        ></textarea>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
