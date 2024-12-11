@@ -1,69 +1,94 @@
-
-<mat-grid-list cols="2" rowHeight="3:2" class=".custom-grid">
-  <!-- Primo riquadro: Testo originale -->
-  <mat-grid-tile>
+<mat-toolbar class="custom-toolbar" color="primary">
+  <button mat-button class="custom-toolbar-label">AI-Trad Application</button>
+  <span class="spacer"></span>
+  <button class="custom-toolbar-button" mat-flat-button>Upload</button>
+ </mat-toolbar>
+ 
+ <mat-grid-list cols="3" rowHeight="fit" class="custom-grid">
+ 
+  <mat-grid-tile
+    [colspan]="1"
+    [rowspan]="1">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Testo Originale</mat-card-title>
+        <mat-card-title>Original</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content class="custom-container">
         <textarea
+          class="custom-textarea"
           [(ngModel)]="inputText"
-          class="form-control"
-          rows="8"
-          placeholder="Inserisci il testo originale..."
         ></textarea>
-        <button mat-raised-button color="primary" (click)="translateText()">Traduci</button>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
-
-  <!-- Secondo riquadro: Testo aggiuntivo -->
-  <mat-grid-tile>
+ 
+  <mat-grid-tile
+    [colspan]="1"
+    [rowspan]="1">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Testo Aggiuntivo</mat-card-title>
+        <mat-card-title>Original Amended</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <textarea
           [(ngModel)]="additionalInputText"
-          class="form-control"
-          rows="8"
-          placeholder="Inserisci altro testo..."
         ></textarea>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
-
-  <!-- Terzo riquadro: Sinonimi -->
-  <mat-grid-tile>
+ 
+  <mat-grid-tile
+    [colspan]="1"
+    [rowspan]="2">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Sinonimi</mat-card-title>
-      </mat-card-header>
       <mat-card-content>
-        <ul>
-          <li *ngFor="let synonym of synonyms">{{ synonym }}</li>
-        </ul>
+        <mat-tab-group>
+          <mat-tab label="First">
+            <textarea class="tab-textarea">Content 1</textarea>
+          </mat-tab>
+          <mat-tab label="Second">
+            <textarea class="tab-textarea">Content 2</textarea>
+          </mat-tab>
+          <mat-tab label="Third">
+            <textarea class="tab-textarea">Content 3</textarea>
+          </mat-tab>
+        </mat-tab-group>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
-
-  <!-- Quarto riquadro: Testo tradotto -->
-  <mat-grid-tile>
+ 
+  <mat-grid-tile
+    [colspan]="1"
+    [rowspan]="1">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Translation</mat-card-title>
+        <mat-card-title>Translated</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <textarea
           [value]="translatedText"
-          class="form-control"
-          rows="8"
           readonly
           (mouseup)="highlightWord($event)"
         ></textarea>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
-</mat-grid-list>
+ 
+  <mat-grid-tile
+    [colspan]="1"
+    [rowspan]="1">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Translated Amended</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <textarea
+          [value]="translatedText"
+          readonly
+          (mouseup)="highlightWord($event)"
+        ></textarea>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+ 
+ </mat-grid-list>

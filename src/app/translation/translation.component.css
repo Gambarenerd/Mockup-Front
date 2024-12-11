@@ -1,31 +1,61 @@
-.custom-grid {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
 mat-card {
-  background-color: #7dff31;
-  padding: 0px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px !important;
   width: calc(100% - 10px);
   height: calc(100% - 10px);
-}
+  background: #212121 !important;
+ }
+ 
+ .custom-toolbar {
+  background-color: #171717 !important;
+  height: 50px !important;
+ }
+ 
+ .spacer {
+  flex: 1 1 auto;
+ }
 
-mat-card-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
+ .custom-toolbar-label {
+  color: #d5d5d5 !important;
+ }
+ 
+ .custom-toolbar-button {
+  background-color: #d5d5d5 !important;
+  color: #212121 !important;
+  border-radius: 20px !important;
+ }
+ 
+ .custom-grid {
+  height: calc(100% - 50px);
+  width: 100%;
+ }
+ 
+ .custom-button {
+  border-radius: 20px !important;
+ }
 
-textarea {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
+ mat-card-title {
+  font-size: 1.2em !important;
+  color: #bdbdbd;
+ }
+ 
+ textarea {
+  border: none;
+  background-color: #2f2f2f;
+  font-size: 1.2em;
   padding: 10px;
-  border: 1px solid #e6e6e6;
-  border-radius: 10px;
+  border-radius: 15px;
   resize: none;
   width: calc(100% - 10px);
   height: calc(100% - 10px);
+ }
+
+ .tab-textarea {
+  width: calc(100% - 30px);
+  height: 400px;
+  margin-top: 10px;
+  resize: none; /* Remove resizing handle */
 }
 
+ .custom-tab-content {
+  color: green; /* Cambia questo con il colore desiderato */
+}
