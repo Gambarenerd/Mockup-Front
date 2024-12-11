@@ -10,9 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 
-
-
-
 @Component({
  selector: 'app-translation',
  standalone: true,
@@ -27,9 +24,7 @@ export class TranslationComponent {
  translatedText: string = '';
  synonyms: string[] = [];
 
-
  constructor(private http: HttpClient) {}
-
 
  translateText() {
    const backendUrl = 'http://127.0.0.1:8000/translate';
@@ -43,12 +38,10 @@ export class TranslationComponent {
    );
  }
 
-
- // Funzione per evidenziare una parola e recuperare i sinonimi
+ // Keep it for later
  highlightWord(event: MouseEvent) {
    const selection = window.getSelection();
    const selectedWord = selection ? selection.toString().trim() : '';
-
 
    if (selectedWord) {
      const backendUrl = 'http://127.0.0.1:8000/synonyms'; // Modifica con il tuo endpoint
@@ -62,4 +55,29 @@ export class TranslationComponent {
      );
    }
  }
+
+ onFileUpload(event: Event): void {
+  const input = event.target as HTMLInputElement;
+
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Invia il file al back-end
+    const backendUrl = 'http://127.0.0.1:8000/upload/';
+    this.http.post<any>(backendUrl, formData).subscribe(
+      (response) => {
+        console.log('Risultato Analisi:', response);
+        // Puoi aggiornare il testo nella UI
+        this.inputText = response.original_text || '';
+        this.additionalInputText = response.amended_text || '';
+      },
+      (error) => {
+        console.error('Errore durante l\'upload del file:', error);
+      }
+    );
+  }
+}
+
 }

@@ -1,7 +1,10 @@
 <mat-toolbar class="custom-toolbar" color="primary">
   <button mat-button class="custom-toolbar-label">AI-Trad Application</button>
   <span class="spacer"></span>
-  <button class="custom-toolbar-button" mat-flat-button>Upload</button>
+  <button class="custom-toolbar-button" mat-flat-button>
+    <label for="file-upload" style="cursor: pointer;">Upload</label>
+    <input id="file-upload" type="file" (change)="onFileUpload($event)" style="display: none;" />
+  </button>
  </mat-toolbar>
  
  <mat-grid-list cols="3" rowHeight="fit" class="custom-grid">
