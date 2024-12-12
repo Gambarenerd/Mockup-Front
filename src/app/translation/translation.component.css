@@ -47,7 +47,32 @@ mat-tab{
   color: #bdbdbd;
   padding: 10px;
  }
- 
+
+.custom-container {
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+/* Stile per ogni segmento */
+.segment {
+  background-color: #272727;
+  border-radius: 8px;
+  margin-bottom: 10px; /* Spaziatura tra segmenti */
+  padding: 8px; /* Spaziatura interna del segmento */
+  font-size: 16px; /* Dimensione del testo */
+  color: #bdbdbd; /* Colore del testo */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Animazione morbida per l'hover */
+}
+
+/* Hover sui segmenti */
+.segment:hover {
+  background-color: #d1d1d1; /* Cambia colore dello sfondo al passaggio del mouse */
+  color: #000; /* Cambia il colore del testo per evidenziarlo meglio */
+}
+
  textarea {
   border: none;
   background-color: #272727;
@@ -61,30 +86,43 @@ mat-tab{
   height: calc(100% - 10px);
  }
 
+ .tab-content {
+  width: calc(100% - 30px);/* Occupa tutta la larghezza disponibile */
+  height: 500px; /* Occupa tutta l'altezza del contenitore */
+  padding: 10px; /* Spaziatura interna */
+  background-color: #272727; /* Sfondo chiaro */
+  border-radius: 15px; /* Angoli stondati */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Effetto ombra interna */
+  font-size: 16px; /* Dimensione del testo */
+  color: #bdbdbd; /* Colore del testo */
+  overflow-y: auto; /* Abilita lo scorrimento verticale se il contenuto supera l'altezza */
+  margin-top: 10px;
+}
+
  .tab-textarea {
   width: calc(100% - 30px);
   height: 400px;
   margin-top: 10px;
-  resize: none; /* Remove resizing handle */
+  resize: none;
 }
 
  .custom-tab-content {
-  color: green; /* Cambia questo con il colore desiderato */
+  color: green;
 }
 
-textarea::-webkit-scrollbar {
+.custom-container::-webkit-scrollbar {
   width: 10px;
 }
 
-textarea::-webkit-scrollbar-track {
+.custom-container::-webkit-scrollbar-track {
   background: transparent;
 }
 
-textarea::-webkit-scrollbar-thumb {
+.custom-container::-webkit-scrollbar-thumb {
   background: #7c7c7c;
   border-radius: 4px;
 }
 
-textarea::-webkit-scrollbar-thumb:hover {
+.custom-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

@@ -17,10 +17,13 @@
         <mat-card-title>Original</mat-card-title>
       </mat-card-header>
       <mat-card-content class="custom-container">
-        <textarea
-          class="custom-textarea"
-          [(ngModel)]="inputText"
-        ></textarea>
+        <div *ngFor="let segment of originalSegments" 
+        class="segment"
+        (mouseenter)="highlightSegment($event)"
+        (mouseleave)="clearHighlight($event)"
+        (click)="processSegment(segment)">
+     {{ segment }}
+   </div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
@@ -32,10 +35,14 @@
       <mat-card-header>
         <mat-card-title>Original Amended</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        <textarea
-          [(ngModel)]="additionalInputText"
-        ></textarea>
+      <mat-card-content class="custom-container">
+          <div *ngFor="let segment of amendedSegments" 
+             class="segment"
+            (mouseenter)="highlightSegment($event)"
+            (mouseleave)="clearHighlight($event)"
+            (click)="processSegment(segment)">
+            {{ segment }}
+          </div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
@@ -47,13 +54,13 @@
       <mat-card-content>
         <mat-tab-group>
           <mat-tab label="First">
-            <textarea class="tab-textarea">Content 1</textarea>
+            <div class="tab-content">Content 1</div>
           </mat-tab>
           <mat-tab label="Second">
-            <textarea class="tab-textarea">Content 2</textarea>
+            <div class="tab-content">Content 2</div>
           </mat-tab>
           <mat-tab label="Third">
-            <textarea class="tab-textarea">Content 3</textarea>
+            <div class="tab-content">Content 3</div>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
@@ -68,11 +75,10 @@
         <mat-card-title>Translated</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <textarea
-          [value]="translatedText"
-          readonly
+        <div
+        class="segment"
           (mouseup)="highlightWord($event)"
-        ></textarea>
+        ></div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
@@ -85,11 +91,10 @@
         <mat-card-title>Translated Amended</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <textarea
-          [value]="translatedText"
-          readonly
+        <div
+        class="segment"
           (mouseup)="highlightWord($event)"
-        ></textarea>
+        ></div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>

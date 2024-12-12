@@ -19,16 +19,18 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
  encapsulation: ViewEncapsulation.None
 })
 export class TranslationComponent {
- inputText: string = '';
- additionalInputText: string = '';
+ originalText: string = '';
+ amendedText: string = '';
  translatedText: string = '';
  synonyms: string[] = [];
+ originalSegments: string[] = [];
+ amendedSegments: string[] = [];
 
  constructor(private http: HttpClient) {}
 
  translateText() {
    const backendUrl = 'http://127.0.0.1:8000/translate';
-   this.http.post<any>(backendUrl, { text: this.inputText }).subscribe(
+   this.http.post<any>(backendUrl, { text: this.originalText }).subscribe(
      (response) => {
        this.translatedText = response.translated_text;
      },
@@ -70,14 +72,34 @@ export class TranslationComponent {
       (response) => {
         console.log('Risultato Analisi:', response);
         // Puoi aggiornare il testo nella UI
-        this.inputText = response.original_text || '';
-        this.additionalInputText = response.amended_text || '';
+        this.originalSegments = response.segmented_original || [];
+        this.amendedSegments = response.segmented_amended || [];
       },
       (error) => {
         console.error('Errore durante l\'upload del file:', error);
       }
     );
   }
+}
+
+highlightSegment(event: MouseEvent): void {
+  const target = event.target as HTMLElement;
+  if (target) {
+    target.style.backgroundColor = '#e4aa3e';
+  }
+}
+
+clearHighlight(event: MouseEvent): void {
+  const target = event.target as HTMLElement;
+  if (target) {
+    target.style.backgroundColor = '';
+  }
+}
+
+
+processSegment(segment: string): void {
+  console.log('Segmento selezionato:', segment);
+  // Add more logic here
 }
 
 }
