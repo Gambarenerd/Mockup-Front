@@ -9,11 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import { MatIconModule } from '@angular/material/icon';
+
 
 @Component({
  selector: 'app-translation',
  standalone: true,
- imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule, MatToolbar, MatTabGroup, MatTab],
+ imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule, MatToolbar, MatTabGroup, MatTab, MatIconModule],
  templateUrl: './translation.component.html',
  styleUrls: ['./translation.component.css'],
  encapsulation: ViewEncapsulation.None
@@ -21,18 +23,20 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 export class TranslationComponent {
  originalText: string = '';
  amendedText: string = '';
- translatedText: string = '';
  synonyms: string[] = [];
  originalSegments: string[] = [];
  amendedSegments: string[] = [];
+ firstTabContent: string = '';
+ amendments: { segmented_original: string[]; segmented_amended: string[] }[] = [];
+ currentPageIndex: number = 0;
 
  constructor(private http: HttpClient) {}
 
- translateText() {
+ translateText(segment: string) {
    const backendUrl = 'http://127.0.0.1:8000/translate';
-   this.http.post<any>(backendUrl, { text: this.originalText }).subscribe(
+   this.http.post<any>(backendUrl, { text: segment }).subscribe(
      (response) => {
-       this.translatedText = response.translated_text;
+       this.firstTabContent = response.translated_text;
      },
      (error) => {
        console.error('Errore durante la traduzione:', error);
@@ -72,13 +76,50 @@ export class TranslationComponent {
       (response) => {
         console.log('Risultato Analisi:', response);
         // Puoi aggiornare il testo nella UI
-        this.originalSegments = response.segmented_original || [];
-        this.amendedSegments = response.segmented_amended || [];
+        this.amendments = response || [];
+        this.currentPageIndex = 0;
+        this.updatePage()
       },
       (error) => {
         console.error('Errore durante l\'upload del file:', error);
       }
     );
+  }
+}
+
+updatePage(): void {
+  if (this.amendments.length > 0 && this.currentPageIndex < this.amendments.length) {
+    const wrappers = document.querySelectorAll('.page-wrapper') as NodeListOf<HTMLElement>;
+
+    wrappers.forEach((wrapper) => {
+      wrapper.classList.add('animate');
+
+      setTimeout(() => {
+        wrapper.classList.remove('animate');
+
+        
+        if (wrapper.classList.contains('original')) {
+          this.originalSegments = this.amendments[this.currentPageIndex].segmented_original;
+        } else if (wrapper.classList.contains('amended')) {
+          this.amendedSegments = this.amendments[this.currentPageIndex].segmented_amended;
+        }
+      }, 300);
+    });
+  }
+}
+
+
+nextPage(): void {
+  if (this.currentPageIndex < this.amendments.length - 1) {
+    this.currentPageIndex++;
+    this.updatePage();
+  }
+}
+
+previousPage(): void {
+  if (this.currentPageIndex > 0) {
+    this.currentPageIndex--;
+    this.updatePage();
   }
 }
 
@@ -96,10 +137,9 @@ clearHighlight(event: MouseEvent): void {
   }
 }
 
-
 processSegment(segment: string): void {
   console.log('Segmento selezionato:', segment);
-  // Add more logic here
+  this.translateText(segment)
 }
 
 }

@@ -5,56 +5,56 @@
     <label for="file-upload" style="cursor: pointer;">Upload</label>
     <input id="file-upload" type="file" (change)="onFileUpload($event)" style="display: none;" />
   </button>
- </mat-toolbar>
- 
- <mat-grid-list cols="3" rowHeight="fit" class="custom-grid">
- 
-  <mat-grid-tile
-    [colspan]="1"
-    [rowspan]="1">
+</mat-toolbar>
+
+<mat-grid-list cols="3" rowHeight="fit" class="custom-grid">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Original</mat-card-title>
       </mat-card-header>
       <mat-card-content class="custom-container">
-        <div *ngFor="let segment of originalSegments" 
-        class="segment"
-        (mouseenter)="highlightSegment($event)"
-        (mouseleave)="clearHighlight($event)"
-        (click)="processSegment(segment)">
-     {{ segment }}
-   </div>
+        <div class="page-wrapper original">
+          <div *ngFor="let segment of originalSegments" class="segment" (mouseenter)="highlightSegment($event)"
+            (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
+          </div>
+        </div>
       </mat-card-content>
+      <div class="paginator-custom">
+        <button mat-icon-button (click)="previousPage()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span *ngFor="let page of amendments; let i = index" class="dot" [ngClass]="{'active': i === currentPageIndex}">
+        </span>
+        <button mat-icon-button (click)="nextPage()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
     </mat-card>
   </mat-grid-tile>
- 
-  <mat-grid-tile
-    [colspan]="1"
-    [rowspan]="1">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Original Amended</mat-card-title>
       </mat-card-header>
       <mat-card-content class="custom-container">
-          <div *ngFor="let segment of amendedSegments" 
-             class="segment"
-            (mouseenter)="highlightSegment($event)"
-            (mouseleave)="clearHighlight($event)"
-            (click)="processSegment(segment)">
-            {{ segment }}
+        <div class="page-wrapper amended">
+          <div *ngFor="let segment of amendedSegments" class="segment" (mouseenter)="highlightSegment($event)"
+            (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
           </div>
+        </div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
- 
-  <mat-grid-tile
-    [colspan]="1"
-    [rowspan]="2">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
     <mat-card>
       <mat-card-content>
         <mat-tab-group>
-          <mat-tab label="First">
-            <div class="tab-content">Content 1</div>
+          <mat-tab label="Segment Analysis">
+            <div class="tab-content">{{firstTabContent}}</div>
           </mat-tab>
           <mat-tab label="Second">
             <div class="tab-content">Content 2</div>
@@ -66,37 +66,27 @@
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
- 
-  <mat-grid-tile
-    [colspan]="1"
-    [rowspan]="1">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Translated</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div
-        class="segment"
-          (mouseup)="highlightWord($event)"
-        ></div>
+        <div class="segment" (mouseup)="highlightWord($event)"></div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
- 
-  <mat-grid-tile
-    [colspan]="1"
-    [rowspan]="1">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Translated Amended</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div
-        class="segment"
-          (mouseup)="highlightWord($event)"
-        ></div>
+        <div class="segment" (mouseup)="highlightWord($event)"></div>
       </mat-card-content>
     </mat-card>
   </mat-grid-tile>
- 
- </mat-grid-list>
+
+</mat-grid-list>
