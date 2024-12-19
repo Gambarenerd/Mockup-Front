@@ -7,30 +7,56 @@ mat-card {
   flex-direction: column; /* Aggiunto per il layout flex */
  }
 
+ .loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Sfondo semi-trasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: white;
+  flex-direction: column;
+}
+
+.loader-overlay p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+ 
+ 
  mat-card-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-mat-tab-group{
+ }
+ 
+ 
+ mat-tab-group{
   flex: 1;
   display: flex;
   flex-direction: column;
-}
+ }
+ 
  
  .custom-toolbar {
   background-color: #171717 !important;
   height: 50px !important;
  }
  
+ 
  .spacer {
   flex: 1 1 auto;
  }
-
+ 
+ 
  .custom-toolbar-label {
   color: #d5d5d5 !important;
  }
+ 
  
  .custom-toolbar-button {
   background-color: #e4aa3e !important;
@@ -39,106 +65,151 @@ mat-tab-group{
   margin-top: 5px;
  }
  
+ 
  .custom-grid {
   height: calc(100% - 50px);
   width: 100%;
  }
  
+ 
  .custom-button {
   border-radius: 20px !important;
  }
-
+ 
+ 
  mat-card-title {
   font-size: 1.3em !important;
   color: #bdbdbd;
   padding: 10px;
  }
-
-.custom-container {
+ 
+ 
+ .custom-container {
   border-radius: 10px;
   padding: 10px;
   overflow-y: auto;
   max-height: 300px;
-}
-
-/* Stile per ogni segmento */
-.segment {
+ }
+ 
+ 
+ .segment {
   background-color: #272727;
   border-radius: 8px;
-  margin-bottom: 10px; /* Spaziatura tra segmenti */
-  padding: 8px; /* Spaziatura interna del segmento */
-  font-size: 16px; /* Dimensione del testo */
-  color: #bdbdbd; /* Colore del testo */
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  color: #bdbdbd;
   cursor: pointer;
-  transition: background-color 0.3s; /* Animazione morbida per l'hover */
-}
-
-/* Hover sui segmenti */
-.segment:hover {
-  background-color: #d1d1d1; /* Cambia colore dello sfondo al passaggio del mouse */
+  transition: background-color 0.3s;
+ }
+ 
+ 
+ .segment:hover {
+  background-color: #e4aa3e; /* Cambia colore dello sfondo al passaggio del mouse */
   color: #000; /* Cambia il colore del testo per evidenziarlo meglio */
-}
-
+ }
+ 
+ 
  .tab-content {
   background-color: #272727;
   border-radius: 8px;
-  font-size: 16px; 
+  font-size: 16px;
   color: #bdbdbd;
   margin-top: 10px;
   border-radius: 10px;
   padding: 10px;
   overflow-y: auto;
-}
-
-.page-wrapper {
+ }
+ 
+ 
+ .page-wrapper {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   opacity: 1;
   transform: translateY(0);
-}
-
-.page-wrapper.animate {
+ }
+ 
+ 
+ .page-wrapper.animate {
   opacity: 0;
   transform: translateY(5px);
-}
-
-.paginator-custom {
+ }
+ 
+ 
+ .paginator-custom {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.paginator-custom button {
+ }
+ 
+ 
+ .paginator-custom button {
   cursor: pointer;
   margin: 0 2px;
   color: #808080;
-}
-
-.paginator-custom .dot {
+ }
+ 
+ 
+ .paginator-custom .dot {
   display: inline-block;
   width: 7px;
   height: 7px;
   margin: 0 5px;
   border-radius: 50%;
   background-color: #808080;
-}
-
-.paginator-custom .dot.active {
+ }
+ 
+ 
+ .paginator-custom .dot.active {
   background-color: #e4aa3e;
-}
-
-.custom-container::-webkit-scrollbar {
+ }
+ 
+ 
+ .custom-container::-webkit-scrollbar {
   width: 10px;
-}
-
-.custom-container::-webkit-scrollbar-track {
+ }
+ 
+ 
+ .custom-container::-webkit-scrollbar-track {
   background: transparent;
-}
-
-.custom-container::-webkit-scrollbar-thumb {
+ }
+ 
+ 
+ .custom-container::-webkit-scrollbar-thumb {
   background: #7c7c7c;
   border-radius: 4px;
-}
-
-.custom-container::-webkit-scrollbar-thumb:hover {
+ }
+ 
+ 
+ .custom-container::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
+ }
+ 
+ 
+ .editable-textarea {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 8px;
+ }
+ 
+ 
+ .custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+ 
+ 
+ .fab-button {
+  background-color: transparent !important;
+  color: #bebebe !important;
+  box-shadow: none !important;
+  margin-right: 8px;
+  margin-top: -10px;
+ }
+ 
+ 
