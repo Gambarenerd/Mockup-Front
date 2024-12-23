@@ -38,7 +38,7 @@ export class TranslationComponent {
 
   isLoading: boolean = false;
 
-  baseUrl: string = 'https://aitrad-backend-5bf8513366a4.herokuapp.com';
+  baseUrl: string = 'http://127.0.0.1:8000';
 
   constructor(private http: HttpClient) { }
 
@@ -98,7 +98,10 @@ export class TranslationComponent {
 
   //webSocket connection to avoid timeout due to heroku limit to 30s
   connectWebSocket(processId: string): void {
-    const ws = new WebSocket(`wss://aitrad-backend-5bf8513366a4.herokuapp.com/ws`);
+    //const ws = new WebSocket(`wss://aitrad-backend-5bf8513366a4.herokuapp.com/ws`);
+    const ws = new WebSocket(`ws://127.0.0.1:8000/ws`);
+
+    console.log('Creating WebSocket connection...');
 
     ws.onopen = () => {
       console.log('WebSocket connection established');
