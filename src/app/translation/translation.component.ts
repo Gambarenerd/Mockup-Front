@@ -54,12 +54,10 @@ export class TranslationComponent {
     );
   }
 
-
   // Keep it for later
   highlightWord(event: MouseEvent) {
     const selection = window.getSelection();
     const selectedWord = selection ? selection.toString().trim() : '';
-
 
     if (selectedWord) {
       const backendUrl = `${this.baseUrl}/synonyms`;
@@ -74,7 +72,6 @@ export class TranslationComponent {
     }
   }
 
-
   onFileUpload(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -88,33 +85,63 @@ export class TranslationComponent {
       const backendUrl = `${this.baseUrl}/upload/`;
       this.http.post<any>(backendUrl, formData).subscribe(
         (response) => {
-          console.log('Risultato Analisi:', response);
-
-          this.amendments = response || [];
-          this.currentPageIndex = 0;
-          this.updatePage()
-          this.isLoading = false;
+          console.log('File uploaded, process ID:', response.process_id);
+          this.connectWebSocket(response.process_id);
         },
         (error) => {
           console.error('Errore durante l\'upload del file:', error);
+          this.isLoading = false;
         }
       );
     }
   }
 
+  //webSocket connection to avoid timeout due to heroku limit to 30s
+  connectWebSocket(processId: string): void {
+    const ws = new WebSocket(`wss://aitrad-backend-5bf8513366a4.herokuapp.com/ws`);
+
+    ws.onopen = () => {
+      console.log('WebSocket connection established');
+      ws.send(processId);
+    };
+
+    ws.onmessage = (event) => {
+      const status = JSON.parse(event.data);
+      console.log('WebSocket message received:', status);
+
+      if (status.status === 'completed') {
+        console.log('Process completed:', status.result);
+        this.amendments = status.result;
+        this.currentPageIndex = 0;
+        this.updatePage();
+        this.isLoading = false;
+        ws.close();
+      } else if (status.status === 'error') {
+        console.error('Errore durante l\'elaborazione:', status.error);
+        this.isLoading = false;
+        ws.close();
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      this.isLoading = false;
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+  }
 
   updatePage(): void {
     if (this.amendments.length > 0 && this.currentPageIndex < this.amendments.length) {
       const wrappers = document.querySelectorAll('.page-wrapper') as NodeListOf<HTMLElement>;
 
-
       wrappers.forEach((wrapper) => {
         wrapper.classList.add('animate');
 
-
         setTimeout(() => {
           wrapper.classList.remove('animate');
-
 
           if (wrapper.classList.contains('original')) {
             this.originalSegments = this.amendments[this.currentPageIndex].seg_ori;
