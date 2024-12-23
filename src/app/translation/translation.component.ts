@@ -81,11 +81,13 @@ export class TranslationComponent {
       formData.append('file', file);
 
       this.isLoading = true;
+      console.log('Uploading document');
 
       const backendUrl = `${this.baseUrl}/upload/`;
       this.http.post<any>(backendUrl, formData).subscribe(
         (response) => {
           console.log('File uploaded, process ID:', response.process_id);
+          
           this.connectWebSocket(response.process_id);
         },
         (error) => {
