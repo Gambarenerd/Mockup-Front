@@ -36,12 +36,14 @@ export class TranslationComponent {
   isExpanded: boolean = false;
   isEditing: boolean = false;
 
-  isLoading: boolean = false; // Stato del loader
+  isLoading: boolean = false;
+
+  baseUrl: string = 'https://aitrad-backend-5bf8513366a4.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
   translateText(segment: string) {
-    const backendUrl = 'http://127.0.0.1:8000/translate';
+    const backendUrl = `${this.baseUrl}/translate`;
     this.http.post<any>(backendUrl, { text: segment }).subscribe(
       (response) => {
         this.firstTabContent = response.translated_text;
@@ -60,7 +62,7 @@ export class TranslationComponent {
 
 
     if (selectedWord) {
-      const backendUrl = 'http://127.0.0.1:8000/synonyms'; // Modifica con il tuo endpoint
+      const backendUrl = `${this.baseUrl}/synonyms`;
       this.http.post<any>(backendUrl, { word: selectedWord }).subscribe(
         (response) => {
           this.synonyms = response.synonyms || [];
@@ -83,7 +85,7 @@ export class TranslationComponent {
 
       this.isLoading = true;
 
-      const backendUrl = 'http://127.0.0.1:8000/upload/';
+      const backendUrl = `${this.baseUrl}/upload/`;
       this.http.post<any>(backendUrl, formData).subscribe(
         (response) => {
           console.log('Risultato Analisi:', response);
