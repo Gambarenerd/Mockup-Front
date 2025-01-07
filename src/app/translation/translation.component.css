@@ -211,5 +211,31 @@ mat-card {
   margin-right: 8px;
   margin-top: -10px;
  }
+
+ /*Style for laterale setting side nav*/
+ .sidenav-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100vh; /* Occupa l'intera altezza della finestra */
+  overflow: hidden;
+  background-color: #171717 !important;
+}
+
+mat-sidenav {
+  background-color: #171717 !important; /* Assicurati che il colore sia uniforme */
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  padding: 8px; /* Aggiungi spazio intorno ai contenuti */
+}
+
+mat-sidenav-content {
+  flex: 1; /* Permette al contenuto principale di occupare lo spazio rimanente */
+  overflow: auto; /* Consente lo scorrimento del contenuto */
+  background-color: #171717;
+}
  
  

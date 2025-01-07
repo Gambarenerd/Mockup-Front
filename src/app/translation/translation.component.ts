@@ -11,12 +11,15 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { MatTab, MatTabGroup } from "@angular/material/tabs";
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
 selector: 'app-translation',
 standalone: true,
-imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule, MatToolbar, MatTabGroup, MatTab, MatIconModule, MatProgressSpinnerModule],
+imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule,
+          MatToolbar, MatTabGroup, MatTab, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSelectModule],
 templateUrl: './translation.component.html',
 styleUrls: ['./translation.component.css'],
 encapsulation: ViewEncapsulation.None
@@ -35,7 +38,6 @@ currentPageIndex: number = 0;
 
 isExpanded: boolean = false;
 isEditing: boolean = false;
-
 isLoading: boolean = false;
 
 textareas: HTMLTextAreaElement[] = [];
@@ -43,6 +45,35 @@ textareas: HTMLTextAreaElement[] = [];
 baseUrl: string = 'http://127.0.0.1:8000';
 
 constructor(private http: HttpClient) { }
+
+isSidenavOpen = false;
+  selectedModel = '';
+  targetLanguage = '';
+  models = ['llama3.3', 'gemma2:27b', 'mistral'];
+  langs = ['Italian', 'French', 'English'];
+
+  applySettings(): void {
+    const backendUrl = `${this.baseUrl}/update-settings/`;
+    const payload = {
+      model: this.selectedModel,
+      lang: this.targetLanguage,
+    };
+  
+    this.http.post<any>(backendUrl, payload).subscribe(
+      (response) => {
+        console.log('Settings updated successfully:', response);
+        alert(`Settings applied: Model - ${this.selectedModel}, Language - ${this.targetLanguage}`);
+      },
+      (error) => {
+        console.error('Error updating settings:', error);
+        alert('Failed to update settings. Please try again.');
+      }
+    );
+  }
+
+  toggleSidenav(): void {
+    this.isSidenavOpen = !this.isSidenavOpen;
+  }
 
 translateText(segment: string) {
     const backendUrl = `${this.baseUrl}/translate`;
