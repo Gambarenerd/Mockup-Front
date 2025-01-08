@@ -229,17 +229,34 @@ import { MatSelectModule } from '@angular/material/select';
   processSegment(segment: string): void {
     console.log('Segmento selezionato:', segment);
     this.translateText(segment)
-  }
-
-
-  // this is only now to enable the edit for translated segment
-  toggleExpand(): void {
+    }
+    
+    
+    toggleExpand(): void {
     this.isEditing = !this.isEditing;
-  }
+    }
 
-  //do we need this?
-  saveSegment(index: number) {
-    console.log('Salvato segmento', index, this.translatedAmendedSegments[index]);
-  }
+    
+    saveTextareaRef(index: number, element: EventTarget | null): void {
+      if (element instanceof HTMLTextAreaElement) {
+        this.textareas[index] = element;
+      } else {
+        console.warn(`Element at index ${index} is not a valid HTMLTextAreaElement`);
+      }
+    }
+    
+    updateSegment(index: number): void {
+      console.log(`Updated segment at index ${index}: ${this.translatedAmendedSegments[index]}`);
+    
+      setTimeout(() => {
+        if (this.textareas[index]) {
+          this.textareas[index].focus();
+        }
+      }, 0);
+    }
+    
+    trackByIndex(index: number, item: string): number {
+      return index;
+    }
 
 }
