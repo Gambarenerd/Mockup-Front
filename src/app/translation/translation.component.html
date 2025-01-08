@@ -1,11 +1,38 @@
+
 <mat-toolbar class="custom-toolbar" color="primary">
-  <button mat-button class="custom-toolbar-label">AI-Trad Application</button>
+  <button mat-button class="custom-toolbar-label" (click)="toggleSidenav()">AI-Trad Application</button>
   <span class="spacer"></span>
   <button class="custom-toolbar-button" mat-flat-button>
     <label for="file-upload" style="cursor: pointer;">Upload</label>
     <input id="file-upload" type="file" (change)="onFileUpload($event)" style="display: none;" />
   </button>
 </mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen">
+    <div class="sidenav-content">
+    <h3>Settings</h3>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Model</mat-label>
+      <mat-select [(ngModel)]="selectedModel">
+        <mat-option *ngFor="let model of models" [value]="model">{{ model }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Target Language</mat-label>
+      <mat-select [(ngModel)]="targetLanguage">
+        <mat-option *ngFor="let lang of langs" [value]="lang">{{ lang }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="applySettings()" class="custom-toolbar-button">Apply</button>
+    </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
 
 <div class="loader-overlay" *ngIf="isLoading" color="accent">
   <mat-spinner color="warn"></mat-spinner>
@@ -109,10 +136,12 @@
           </div>
         </div>
         <div *ngIf="isEditing" class="page-wrapper translated_amended">
-          <div *ngFor="let segment of translatedAmendedSegments; let i = index">
+          <div *ngFor="let segment of translatedAmendedSegments; let i = index, trackBy: trackByIndex">
             <textarea
               [(ngModel)]="translatedAmendedSegments[i]"
-              class="editable-textarea">
+              class="editable-textarea"
+              (input)="updateSegment(i)"
+              (focus)="saveTextareaRef(i, $event.target)">
             </textarea>
           </div>
         </div>
@@ -120,5 +149,7 @@
     </mat-card>
   </mat-grid-tile>
 
-
 </mat-grid-list>
+
+</mat-sidenav-content>
+</mat-sidenav-container>

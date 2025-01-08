@@ -11,38 +11,70 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { MatTab, MatTabGroup } from "@angular/material/tabs";
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
   selector: 'app-translation',
   standalone: true,
-  imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule, MatToolbar, MatTabGroup, MatTab, MatIconModule, MatProgressSpinnerModule],
+  imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule,
+            MatToolbar, MatTabGroup, MatTab, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSelectModule],
   templateUrl: './translation.component.html',
   styleUrls: ['./translation.component.css'],
   encapsulation: ViewEncapsulation.None
-})
-export class TranslationComponent {
+  })
+  export class TranslationComponent {
   synonyms: string[] = [];
-
+  
   originalSegments: string[] = [];
   amendedSegments: string[] = [];
   translatedSegments: string[] = [];
   translatedAmendedSegments: string[] = [];
-
+  
   firstTabContent: string = '';
   amendments: { seg_ori: string[]; seg_am_ori: string[]; seg_tra: string[]; seg_am_tra: string[] }[] = [];
   currentPageIndex: number = 0;
-
+  
   isExpanded: boolean = false;
   isEditing: boolean = false;
-
   isLoading: boolean = false;
+  
+  textareas: HTMLTextAreaElement[] = [];
 
   baseUrl: string = 'https://aitrad-backend-5bf8513366a4.herokuapp.com';
   //baseUrl: string = 'http://localhost:8000';
 
+  isSidenavOpen = false;
+  selectedModel = '';
+  targetLanguage = '';
+  models = ['llama3.3', 'gemma2:27b', 'mistral'];
+  langs = ['Italian', 'French', 'English'];
 
   constructor(private http: HttpClient) { }
+
+  applySettings(): void {
+    const backendUrl = `${this.baseUrl}/update-settings/`;
+    const payload = {
+      model: this.selectedModel,
+      lang: this.targetLanguage,
+    };
+  
+    this.http.post<any>(backendUrl, payload).subscribe(
+      (response) => {
+        console.log('Settings updated successfully:', response);
+        alert(`Settings applied: Model - ${this.selectedModel}, Language - ${this.targetLanguage}`);
+      },
+      (error) => {
+        console.error('Error updating settings:', error);
+        alert('Failed to update settings. Please try again.');
+      }
+    );
+  }
+
+  toggleSidenav(): void {
+    this.isSidenavOpen = !this.isSidenavOpen;
+  }
 
   translateText(segment: string) {
     const backendUrl = `${this.baseUrl}/translate`;
@@ -200,13 +232,13 @@ export class TranslationComponent {
   }
 
 
-  // Toggle per espandere/ridurre e attivare/disattivare editing
+  // this is only now to enable the edit for translated segment
   toggleExpand(): void {
     this.isEditing = !this.isEditing;
   }
 
+  //do we need this?
   saveSegment(index: number) {
-    // Logica opzionale per salvare il segmento modificato
     console.log('Salvato segmento', index, this.translatedAmendedSegments[index]);
   }
 
