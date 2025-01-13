@@ -27,13 +27,11 @@ mat-card {
   font-size: 16px;
 }
  
- 
  mat-card-content {
   flex: 1;
   display: flex;
   flex-direction: column;
  }
- 
  
  mat-tab-group{
   flex: 1;
@@ -41,22 +39,19 @@ mat-card {
   flex-direction: column;
  }
  
- 
  .custom-toolbar {
   background-color: #171717 !important;
   height: 50px !important;
  }
  
- 
  .spacer {
   flex: 1 1 auto;
  }
  
- 
  .custom-toolbar-label {
   color: #d5d5d5 !important;
+  margin-top: 5px;
  }
- 
  
  .custom-toolbar-button {
   background-color: #e4aa3e !important;
@@ -65,24 +60,20 @@ mat-card {
   margin-top: 5px;
  }
  
- 
  .custom-grid {
   height: calc(100% - 50px);
   width: 100%;
  }
  
- 
  .custom-button {
   border-radius: 20px !important;
  }
- 
  
  mat-card-title {
   font-size: 1.3em !important;
   color: #bdbdbd;
   padding: 10px;
  }
- 
  
  .custom-container {
   border-radius: 10px;
@@ -103,12 +94,10 @@ mat-card {
   transition: background-color 0.3s;
  }
  
- 
  .segment:hover {
   background-color: #e4aa3e; /* Cambia colore dello sfondo al passaggio del mouse */
   color: #000; /* Cambia il colore del testo per evidenziarlo meglio */
  }
- 
  
  .tab-content {
   background-color: #272727;
@@ -121,19 +110,16 @@ mat-card {
   overflow-y: auto;
  }
  
- 
  .page-wrapper {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   opacity: 1;
   transform: translateY(0);
  }
  
- 
  .page-wrapper.animate {
   opacity: 0;
   transform: translateY(5px);
  }
- 
  
  .paginator-custom {
   display: flex;
@@ -141,13 +127,11 @@ mat-card {
   justify-content: center;
  }
  
- 
  .paginator-custom button {
   cursor: pointer;
   margin: 0 2px;
   color: #808080;
  }
- 
  
  .paginator-custom .dot {
   display: inline-block;
@@ -158,37 +142,31 @@ mat-card {
   background-color: #808080;
  }
  
- 
  .paginator-custom .dot.active {
   background-color: #e4aa3e;
  }
- 
  
  .custom-container::-webkit-scrollbar {
   width: 10px;
  }
  
- 
  .custom-container::-webkit-scrollbar-track {
   background: transparent;
  }
- 
  
  .custom-container::-webkit-scrollbar-thumb {
   background: #7c7c7c;
   border-radius: 4px;
  }
  
- 
  .custom-container::-webkit-scrollbar-thumb:hover {
   background: #555;
  }
  
- 
  .editable-textarea {
   font-family: inherit;
   font-size: inherit;
-  color: inherit;
+  color: #212121;
   border-radius: 8px;
   padding: 5px;
   margin-bottom: 8px;
@@ -237,5 +215,3 @@ mat-sidenav-content {
   overflow: auto; /* Consente lo scorrimento del contenuto */
   background-color: #171717;
 }
- 
- 

@@ -33,6 +33,7 @@ translatedSegments: string[] = [];
 translatedAmendedSegments: string[] = [];
 
 firstTabContent: string = '';
+summary: string = '';
 amendments: { seg_ori: string[]; seg_am_ori: string[]; seg_tra: string[]; seg_am_tra: string[] }[] = [];
 currentPageIndex: number = 0;
 
@@ -49,7 +50,9 @@ constructor(private http: HttpClient) { }
 isSidenavOpen = false;
   selectedModel = '';
   targetLanguage = '';
-  models = ['llama3.3', 'gemma2:27b', 'mistral'];
+  models = ['llama3.3', 'gemma2:27b', 'qwen2.5:72b', 'mistral-small'];
+  temperature = 0.2;
+  topP = 1;
   langs = ['Italian', 'French', 'English'];
 
   applySettings(): void {
@@ -57,6 +60,8 @@ isSidenavOpen = false;
     const payload = {
       model: this.selectedModel,
       lang: this.targetLanguage,
+      temperature: this.temperature,
+      top_p: this.topP
     };
   
     this.http.post<any>(backendUrl, payload).subscribe(
@@ -123,7 +128,8 @@ this.http.post<any>(backendUrl, formData).subscribe(
 (response) => {
 console.log('Risultato Analisi:', response);
 
-this.amendments = response || [];
+this.amendments = response.amendments || [];
+this.summary = response.summary || [];
 this.currentPageIndex = 0;
 this.updatePage()
 this.isLoading = false;
