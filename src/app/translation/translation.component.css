@@ -3,8 +3,8 @@ mat-card {
   width: calc(100% - 10px);
   height: calc(100% - 10px);
   background: #212121 !important;
-  display: flex; /* Aggiunto per il layout flex */
-  flex-direction: column; /* Aggiunto per il layout flex */
+  display: flex;
+  flex-direction: column;
  }
 
  .loader-overlay {
@@ -28,16 +28,15 @@ mat-card {
 }
  
  mat-card-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  flex: 1;
  }
  
  mat-tab-group{
-  flex: 1;
   display: flex;
   flex-direction: column;
- }
+}
  
  .custom-toolbar {
   background-color: #171717 !important;
@@ -59,6 +58,15 @@ mat-card {
   border-radius: 20px !important;
   margin-top: 5px;
  }
+
+ .chat-button {
+  background-color: #e4753e !important;
+  color: #212121 !important;
+  margin-left: 10px;
+  border-radius: 20px !important;
+  margin-top: 5px;
+  box-shadow: none;
+}
  
  .custom-grid {
   height: calc(100% - 50px);
@@ -81,7 +89,6 @@ mat-card {
   overflow-y: auto;
   max-height: 300px;
  }
- 
  
  .segment {
   background-color: #272727;
@@ -189,8 +196,21 @@ mat-card {
   margin-right: 8px;
   margin-top: -10px;
  }
+ 
+ /*Right side-nav*/
+ .sidenav-right {
+  width: 40%; /* Larghezza in percentuale dello schermo */
+  background-color: #393939 !important; /* Colore di sfondo */
+  color: white;
+  overflow-y: auto;
+  height: 100% !important;
+}
 
  /*Style for laterale setting side nav*/
+ .sidenav-left {
+  width: 15%; /* Larghezza in percentuale dello schermo */
+}
+ 
  .sidenav-container {
   display: flex;
   flex: 1;
@@ -214,4 +234,86 @@ mat-sidenav-content {
   flex: 1; /* Permette al contenuto principale di occupare lo spazio rimanente */
   overflow: auto; /* Consente lo scorrimento del contenuto */
   background-color: #171717;
+}
+
+/*Chat Animation*/
+mat-grid-tile {
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+}
+
+.sidenav-chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.chat-messages-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto; /* Consente lo scrolling se necessario */
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.chat-message {
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 70%;
+}
+
+.chat-message.user {
+  background-color: #272727;
+  color: #bdbdbd;
+  align-self: flex-end;
+  text-align: right; /* Allinea il testo a destra */
+}
+
+.chat-message.assistant {
+  color: #bdbdbd;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #272727;
+  border-radius: 30px;
+}
+
+.chat-input {
+  flex: 1;
+  resize: none;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background-color: #272727;
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.chat-input::placeholder {
+  color: #5f5f5f;;
+}
+
+.send-button {
+  margin-left: 10px;
+  background-color: #414040;
+  color: #212121;
+  border: none;
+  box-shadow: none !important;
+  width: 40px; 
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }

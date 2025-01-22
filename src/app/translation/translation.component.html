@@ -1,180 +1,188 @@
 <mat-toolbar class="custom-toolbar" color="primary">
   <button mat-button class="custom-toolbar-label" (click)="toggleSidenav()">AI-Trad Application</button>
   <span class="spacer"></span>
+
   <button class="custom-toolbar-button" mat-flat-button>
     <label for="file-upload" style="cursor: pointer;">Upload</label>
     <input id="file-upload" type="file" (change)="onFileUpload($event)" style="display: none;" />
   </button>
+
+  <button mat-mini-fab (click)="toggleRightSidenav()" class="chat-button">
+    <mat-icon>chat</mat-icon>
+  </button>
+
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen">
+  <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="sidenav-left">
     <div class="sidenav-content">
-    <h3>Settings</h3>
+      <h3>Settings</h3>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Model</mat-label>
-      <mat-select [(ngModel)]="selectedModel">
-        <mat-option *ngFor="let model of models" [value]="model">{{ model }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    <mat-form-field appearance="outline">
-      <mat-label>Temperature</mat-label>
-      <input
-        matInput
-        type="number"
-        [(ngModel)]="temperature"
-        min="0.0"
-        max="1.0"
-        step="0.01"
-        placeholder="Insert a value between 0.0 e 1.0"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Model</mat-label>
+        <mat-select [(ngModel)]="selectedModel">
+          <mat-option *ngFor="let model of models" [value]="model">{{ model }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Top-p</mat-label>
-      <input
-        matInput
-        type="number"
-        [(ngModel)]="topP"
-        min="0.0"
-        max="1.0"
-        step="0.01"
-        placeholder="Insert a value between 0.0 e 1.0"
-      />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Temperature</mat-label>
+        <input matInput type="number" [(ngModel)]="temperature" min="0.0" max="1.0" step="0.01"
+          placeholder="Insert a value between 0.0 e 1.0" />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Target Language</mat-label>
-      <mat-select [(ngModel)]="targetLanguage">
-        <mat-option *ngFor="let lang of langs" [value]="lang">{{ lang }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Top-p</mat-label>
+        <input matInput type="number" [(ngModel)]="topP" min="0.0" max="1.0" step="0.01"
+          placeholder="Insert a value between 0.0 e 1.0" />
+      </mat-form-field>
 
-    <div class="button-container">
-      <button mat-raised-button color="primary" (click)="applySettings()" class="custom-toolbar-button">Apply</button>
-    </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Target Language</mat-label>
+        <mat-select [(ngModel)]="targetLanguage">
+          <mat-option *ngFor="let lang of langs" [value]="lang">{{ lang }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="applySettings()" class="custom-toolbar-button">Apply</button>
+      </div>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content>
 
-<div class="loader-overlay" *ngIf="isLoading" color="accent">
-  <mat-spinner color="warn"></mat-spinner>
-  <p>Analysing document...</p>
-</div>
-
-<mat-grid-list cols="3" rowHeight="fit" class="custom-grid">
-
-
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Original</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="custom-container">
-        <div class="page-wrapper original">
-          <div *ngFor="let segment of originalSegments" class="segment" (mouseenter)="highlightSegment($event)"
-            (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
-          </div>
-        </div>
-      </mat-card-content>
-      <div class="paginator-custom">
-        <button mat-icon-button (click)="previousPage()">
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-        <span *ngFor="let page of amendments; let i = index" class="dot" [ngClass]="{'active': i === currentPageIndex}">
-        </span>
-        <button mat-icon-button (click)="nextPage()">
-          <mat-icon>chevron_right</mat-icon>
+  <mat-sidenav #rightSidenav mode="side" position="end" [(opened)]="isSidenavRightOpen" class="sidenav-right">
+    <div class="sidenav-chat">
+      <!-- Area per i messaggi della chat -->
+      <div class="chat-messages-container">
+        <!-- Esempi di messaggi (sostituisci con dati dinamici in seguito) -->
+        <div class="chat-message user">Hello!</div>
+        <div class="chat-message assistant">Hi, how can I help you?</div>
+      </div>
+  
+      <!-- Area di input -->
+      <div class="chat-input-container">
+        <textarea class="chat-input" rows="1" placeholder="Type your message here..." [(ngModel)]="userMessage"
+          (keydown.enter)="sendMessage()"></textarea>
+        <button mat-mini-fab class="send-button" (click)="sendMessage()">
+          <mat-icon>arrow_upward</mat-icon>
         </button>
       </div>
-    </mat-card>
-  </mat-grid-tile>
+    </div>
+  </mat-sidenav>
 
+  <mat-sidenav-content>
+    <div class="loader-overlay" *ngIf="isLoading" color="accent">
+      <mat-spinner color="warn"></mat-spinner>
+      <p>Analysing document...</p>
+    </div>
 
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Original Amended</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="custom-container">
-        <div class="page-wrapper amended">
-          <div *ngFor="let segment of amendedSegments" class="segment" (mouseenter)="highlightSegment($event)"
-            (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
+    <mat-grid-list cols="12" rowHeight="fit" class="custom-grid">
+
+      <mat-grid-tile [colspan]="isChatExpanded ? 3 : 4" [rowspan]="1">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Original</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="custom-container">
+            <div class="page-wrapper original">
+              <div *ngFor="let segment of originalSegments" class="segment" (mouseenter)="highlightSegment($event)"
+                (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
+              </div>
+            </div>
+          </mat-card-content>
+          <div class="paginator-custom">
+            <button mat-icon-button (click)="previousPage()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span *ngFor="let page of amendments; let i = index" class="dot"
+              [ngClass]="{'active': i === currentPageIndex}">
+            </span>
+            <button mat-icon-button (click)="nextPage()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
+        </mat-card>
+      </mat-grid-tile>
 
+      <mat-grid-tile [colspan]="isChatExpanded ? 3 : 4" [rowspan]="1">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Original Amended</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="custom-container">
+            <div class="page-wrapper amended">
+              <div *ngFor="let segment of amendedSegments" class="segment" (mouseenter)="highlightSegment($event)"
+                (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="1" [rowspan]="2">
-    <mat-card>
-      <mat-card-content>
-        <mat-tab-group>
-          <mat-tab label="Context">
-            <div class="tab-content">{{summary}}</div>
-          </mat-tab>
-          <mat-tab label="Second">
-            <div class="tab-content">{{firstTabContent}}</div>
-          </mat-tab>
-          <mat-tab label="Third">
-            <div class="tab-content">Content 3</div>
-          </mat-tab>
-        </mat-tab-group>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
+      <mat-grid-tile [colspan]="isChatExpanded ? 6 : 4" [rowspan]="2">
+        <mat-card>
+          <mat-card-content>
+            <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+              <mat-tab label="Context">
+                <div class="tab-content">{{summary}}</div>
+              </mat-tab>
+              <mat-tab label="Defintion">
+                <div class="tab-content">{{firstTabContent}}</div>
+              </mat-tab>
 
+              <mat-tab label="Chat" class="chat-tab">
 
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Translated</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="custom-container">
-        <div class="page-wrapper translated">
-          <div *ngFor="let segment of translatedSegments" class="segment" (mouseenter)="highlightSegment($event)"
-            (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
+              </mat-tab>
 
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-card>
-      <mat-card-header class="custom-header">
-        <mat-card-title>Translated Amended</mat-card-title>
-        <!-- Pulsante FAB -->
-        <button mat-mini-fab color="primary" class="fab-button" (click)="toggleExpand()">
-          <mat-icon>{{ isEditing ? 'done' : 'edit' }}</mat-icon>
-        </button>
-      </mat-card-header>
-      <mat-card-content class="custom-container">
-        <!-- Textarea editabile solo quando espanso -->
-        <div *ngIf="!isEditing" class="page-wrapper translated_amended">
-          <div *ngFor="let segment of translatedAmendedSegments" class="segment" (mouseenter)="highlightSegment($event)"
-            (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
-          </div>
-        </div>
-        <div *ngIf="isEditing" class="page-wrapper translated_amended">
-          <div *ngFor="let segment of translatedAmendedSegments; let i = index, trackBy: trackByIndex">
-            <textarea
-              [(ngModel)]="translatedAmendedSegments[i]"
-              class="editable-textarea"
-              (input)="updateSegment(i)"
-              (focus)="saveTextareaRef(i, $event.target)">
+      <mat-grid-tile [colspan]="isChatExpanded ? 3 : 4" [rowspan]="1">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Translated</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="custom-container">
+            <div class="page-wrapper translated">
+              <div *ngFor="let segment of translatedSegments" class="segment" (mouseenter)="highlightSegment($event)"
+                (mouseleave)="clearHighlight($event)" (click)="processSegment(segment)" [innerHTML]="segment">
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="isChatExpanded ? 3 : 4" [rowspan]="1">
+        <mat-card>
+          <mat-card-header class="custom-header">
+            <mat-card-title>Translated Amended</mat-card-title>
+            <!-- Pulsante FAB -->
+            <button mat-mini-fab color="primary" class="fab-button" (click)="toggleExpand()">
+              <mat-icon>{{ isEditing ? 'done' : 'edit' }}</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-content class="custom-container">
+            <!-- Textarea editabile solo quando espanso -->
+            <div *ngIf="!isEditing" class="page-wrapper translated_amended">
+              <div *ngFor="let segment of translatedAmendedSegments" class="segment"
+                (mouseenter)="highlightSegment($event)" (mouseleave)="clearHighlight($event)"
+                (click)="processSegment(segment)" [innerHTML]="segment">
+              </div>
+            </div>
+            <div *ngIf="isEditing" class="page-wrapper translated_amended">
+              <div *ngFor="let segment of translatedAmendedSegments; let i = index, trackBy: trackByIndex">
+                <textarea [(ngModel)]="translatedAmendedSegments[i]" class="editable-textarea"
+                  (input)="updateSegment(i)" (focus)="saveTextareaRef(i, $event.target)">
             </textarea>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-tile>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
 
-</mat-grid-list>
+    </mat-grid-list>
 
-</mat-sidenav-content>
+  </mat-sidenav-content>
 </mat-sidenav-container>
