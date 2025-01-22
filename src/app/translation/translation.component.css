@@ -200,22 +200,24 @@ mat-card {
  /*Right side-nav*/
  .sidenav-right {
   width: 40%; /* Larghezza in percentuale dello schermo */
-  background-color: #393939 !important; /* Colore di sfondo */
+  background-color: #171717 !important; /* Colore di sfondo */
   color: white;
   overflow-y: auto;
-  height: 100% !important;
+  margin: 5px 5px 0px 5px; 
+  height: calc(100% - 60px);
 }
 
  /*Style for laterale setting side nav*/
  .sidenav-left {
   width: 15%; /* Larghezza in percentuale dello schermo */
+  height: calc(100% - 70px);
 }
  
  .sidenav-container {
   display: flex;
   flex: 1;
   flex-direction: column;
-  height: 100vh; /* Occupa l'intera altezza della finestra */
+  height: 100%;
   overflow: hidden;
   background-color: #171717 !important;
 }
@@ -236,6 +238,12 @@ mat-sidenav-content {
   background-color: #171717;
 }
 
+mat-grid-list {
+  margin: 0; /* Rimuovi margini */
+  padding: 0; /* Rimuovi padding */
+  box-sizing: border-box;
+}
+
 /*Chat Animation*/
 mat-grid-tile {
   transition: all 0.3s ease-in-out;
@@ -250,13 +258,14 @@ mat-grid-tile {
   flex-direction: column;
   justify-content: flex-end;
   height: 100%;
+  padding: 0px 5px 0px 5px;
 }
 
 .chat-messages-container {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  overflow-y: auto; /* Consente lo scrolling se necessario */
+  padding: 5px;
+  overflow-y: auto;
   border-radius: 8px;
   margin-top: auto;
 }
