@@ -122,15 +122,16 @@
         <mat-card>
           <mat-card-content>
             <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+              
               <mat-tab label="Context">
-                <div class="tab-content">{{summary}}</div>
+                <div class="tab-content" [innerHTML]="summary"></div>
               </mat-tab>
+
               <mat-tab label="Defintion">
-                <div class="tab-content">{{firstTabContent}}</div>
+                <div class="tab-content" [innerHTML]="firstTabContent"></div>
               </mat-tab>
 
-              <mat-tab label="Chat" class="chat-tab">
-
+              <mat-tab label="Other" class="chat-tab">
               </mat-tab>
 
             </mat-tab-group>
