@@ -56,7 +56,7 @@ export class TranslationComponent {
 
   selectedModel = '';
   targetLanguage = '';
-  models = ['llama3.3', 'gemma2:27b', 'qwen2.5:72b', 'mistral-small'];
+  models = ['llama3.3', 'gemma2:27b', 'mistral-large', 'mistral-small'];
   temperature = 0.2;
   topP = 1;
   langs = ['Italian', 'French', 'English'];
