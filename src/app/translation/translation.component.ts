@@ -13,13 +13,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
-
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-translation',
   standalone: true,
   imports: [MatCardModule, FormsModule, CommonModule, MatGridListModule, MatButtonModule, MatInputModule,
-    MatToolbar, MatTabGroup, MatTab, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSelectModule],
+    MatToolbar, MatTabGroup, MatTab, MatIconModule, MatProgressSpinnerModule, MatSidenavModule, MatSelectModule, ChatComponent],
   templateUrl: './translation.component.html',
   styleUrls: ['./translation.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -224,20 +224,4 @@ export class TranslationComponent {
   trackByIndex(index: number, item: string): number {
     return index;
   }
-
-  sendMessage(): void {
-    if (this.userMessage.trim()) {
-      this.messages.push({ text: this.userMessage, sender: 'user' });
-      this.userMessage = '';
-
-      this.fakeAssistantResponse();
-    }
-  }
-
-  fakeAssistantResponse(): void {
-    setTimeout(() => {
-      this.messages.push({ text: 'This is a placeholder response from the assistant.', sender: 'assistant' });
-    }, 1000); // Simula un ritardo nella risposta
-  }
-
 }

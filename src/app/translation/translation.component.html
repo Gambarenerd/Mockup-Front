@@ -50,23 +50,7 @@
   </mat-sidenav>
 
   <mat-sidenav #rightSidenav mode="side" position="end" [(opened)]="isSidenavRightOpen" class="sidenav-right">
-    <div class="sidenav-chat">
-      <!-- Area per i messaggi della chat -->
-      <div class="chat-messages-container">
-        <!-- Esempi di messaggi (sostituisci con dati dinamici in seguito) -->
-        <div class="chat-message user">Hello!</div>
-        <div class="chat-message assistant">Hi, how can I help you?</div>
-      </div>
-  
-      <!-- Area di input -->
-      <div class="chat-input-container">
-        <textarea class="chat-input" rows="1" placeholder="Type your message here..." [(ngModel)]="userMessage"
-          (keydown.enter)="sendMessage()"></textarea>
-        <button mat-mini-fab class="send-button" (click)="sendMessage()">
-          <mat-icon>arrow_upward</mat-icon>
-        </button>
-      </div>
-    </div>
+    <app-chat></app-chat>
   </mat-sidenav>
 
   <mat-sidenav-content>
