@@ -1,29 +1,25 @@
 <div class="chat-container">
     <!-- Contenitore dei messaggi -->
     <div class="chat-messages-container" #chatMessagesContainer>
-      <div
-        *ngFor="let message of messages"
-        [ngClass]="{
+        <div *ngFor="let message of messages" [ngClass]="{
           'chat-message': true,
           'user': message.sender === 'user',
           'assistant': message.sender === 'assistant'
-        }"
-      >
-        {{ message.text }}
-      </div>
+        }">
+            {{ message.text }}
+        </div>
+
+        <div *ngIf="isLoading" class="chat-message assistant typing-indicator">
+            Thinking<span class="dots"></span>
+        </div>
     </div>
-  
+
     <!-- Area di input per l'utente -->
     <div class="chat-input-container">
-      <textarea
-        class="chat-input"
-        rows="1"
-        placeholder="Type your message here..."
-        [(ngModel)]="userMessage"
-        (keydown.enter)="handleKeydown($event)"
-      ></textarea>
-      <button mat-mini-fab class="send-button" (click)="sendMessage()">
-        <mat-icon>arrow_upward</mat-icon>
-      </button>
+        <textarea class="chat-input" rows="1" placeholder="Type your message here..." [(ngModel)]="userMessage"
+            (keydown.enter)="handleKeydown($event)"></textarea>
+        <button mat-mini-fab class="send-button" (click)="sendMessage()">
+            <mat-icon>arrow_upward</mat-icon>
+        </button>
     </div>
-  </div>
+</div>

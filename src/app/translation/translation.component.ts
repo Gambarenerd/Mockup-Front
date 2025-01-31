@@ -59,6 +59,7 @@ export class TranslationComponent {
   models = ['llama3.3', 'gemma2:27b', 'mistral-large', 'mistral-small'];
   temperature = 0.2;
   topP = 1;
+  topK = 3;
   langs = ['Italian', 'French', 'English'];
 
   applySettings(): void {
@@ -67,7 +68,8 @@ export class TranslationComponent {
       model: this.selectedModel,
       lang: this.targetLanguage,
       temperature: this.temperature,
-      top_p: this.topP
+      top_p: this.topP,
+      top_k: this.topK
     };
 
     this.http.post<any>(backendUrl, payload).subscribe(

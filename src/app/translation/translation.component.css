@@ -102,8 +102,8 @@ mat-card {
  }
  
  .segment:hover {
-  background-color: #e4aa3e; /* Cambia colore dello sfondo al passaggio del mouse */
-  color: #000; /* Cambia il colore del testo per evidenziarlo meglio */
+  background-color: #e4aa3e;
+  color: #000;
  }
  
  .tab-content {
@@ -199,7 +199,7 @@ mat-card {
  
  /*Right side-nav*/
  .sidenav-right {
-  width: 40%; /* Larghezza in percentuale dello schermo */
+  width: 45%; /* Larghezza in percentuale dello schermo */
   background-color: #171717 !important; /* Colore di sfondo */
   color: white;
   overflow-y: auto;

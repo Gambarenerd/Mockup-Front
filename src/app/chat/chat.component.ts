@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common'; // Per NgFor e ngClass
 import { FormsModule } from '@angular/forms'; // Per ngModel
 import { MatIconModule } from '@angular/material/icon'; // Per mat-icon
 import { MatButtonModule } from '@angular/material/button'; 
+import { MatProgressBarModule } from '@angular/material/progress-bar'; 
 
 
 @Component({
@@ -18,11 +19,13 @@ import { MatButtonModule } from '@angular/material/button';
     FormsModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressBarModule,
   ],
 })
 export class ChatComponent {
   userMessage: string = ''; 
   messages: { text: string; sender: 'user' | 'assistant' }[] = []; 
+  isLoading: boolean = false;
 
   @ViewChild('chatMessagesContainer') chatMessagesContainer!: ElementRef; 
 
@@ -44,6 +47,8 @@ export class ChatComponent {
     if (this.userMessage.trim()) {
       this.messages.push({ text: this.userMessage, sender: 'user' });
 
+      this.isLoading = true;
+
       this.scrollToBottom();
 
       const backendUrl = `${this.baseUrl}/query`; 
@@ -51,12 +56,14 @@ export class ChatComponent {
 
       this.http.post<any>(backendUrl, payload).subscribe(
         (response) => {
+          this.isLoading = false;
           this.messages.push({ text: response.results, sender: 'assistant' });
 
           this.scrollToBottom();
         },
         (error) => {
           console.error('Errore durante la chiamata REST:', error);
+          this.isLoading = false;
           this.messages.push({
             text: 'Error: Unable to process your request at the moment.',
             sender: 'assistant',
